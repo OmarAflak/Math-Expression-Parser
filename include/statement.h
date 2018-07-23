@@ -1,7 +1,6 @@
 #ifndef STATEMENT
 #define STATEMENT
 
-#include "uid.h"
 #include "utils.h"
 #include "functions.h"
 
@@ -10,7 +9,6 @@
 
 class Statement {
     private:
-        std::string uid;
         std::string opr;
         std::string left, right;
 

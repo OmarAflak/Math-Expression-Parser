@@ -1,11 +1,8 @@
 #include "../include/statement.h"
 
-Statement::Statement(){
-    this->uid = getUid();
-}
+Statement::Statement(){}
 
 Statement::Statement(std::string left, std::string right, std::string opr){
-    this->uid = getUid();
     this->left = left;
     this->right = right;
     this->opr = opr;
