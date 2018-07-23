@@ -1,6 +1,40 @@
 #include "../include/processor.h"
 
+#include <iostream>
+
+
+std::string Processor::preprocess(std::string expression, const std::unordered_map<std::string, double>& map){
+    removeAllSpaces(expression);
+    
+    for(int i=0 ; i<expression.size() ; i++){
+        if(_op_functions.find(expression[i])!=_op_functions.end()){
+            int op_index=i, li=i-1, ri=i+1;
+
+            while(li>0){
+                if(map.find(expression.substr(li, op_index-li))!=map.end()){
+                    break;
+                }
+                li--;
+            }
+
+            while(ri<expression.size()){
+                if(map.find(expression.substr(op_index+1, ri-op_index-1))!=map.end()){
+                    break;
+                }
+                ri++;
+            }
+
+            std::string lexpr = expression.substr(li, op_index-li);
+            std::string rexpr = expression.substr(op_index+1, ri-op_index-1);
+            expression = expression.substr(0, li)+_op_map_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL+expression.substr(ri+rexpr.size()-1);
+            return preprocess(expression, map);
+        }
+    }
+    return expression;
+}
+
 double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map){
+    removeAllSpaces(expression);
     int left = expression.find_last_of(_LDEL);
     int right = expression.find_first_of(_RDEL, left);
     int comma = expression.find(_SEP, left);
@@ -22,8 +56,8 @@ double Processor::evaluate(std::string expression, const std::unordered_map<std:
                 throw std::invalid_argument("Invalid expression, missing function : "+expression);
             }
 
-            std::string lexpr = trim(expression.substr(left+1, comma-left-1));
-            std::string rexpr = trim(expression.substr(comma+1, right-comma-1));
+            std::string lexpr = expression.substr(left+1, comma-left-1);
+            std::string rexpr = expression.substr(comma+1, right-comma-1);
 
             Statement statement(lexpr, rexpr, opr);
             expression = expression.substr(0, left-opr.size())+toString(statement.evaluate(map))+expression.substr(right+1);

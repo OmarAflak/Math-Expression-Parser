@@ -1,9 +1,13 @@
 #include "../include/utils.h"
 
-std::string trim(const std::string& str){
-    int a = str.find_first_not_of(" ");
-    int b = str.find_last_not_of(" ");
-    return str.substr(a, b-a+1);
+void removeAllSpaces(std::string& str){
+    std::string s;
+    for(const char& c : str){
+        if(c!=' '){
+            s+=c;
+        }
+    }
+    str = s;
 }
 
 bool isNumber(const std::string& str){

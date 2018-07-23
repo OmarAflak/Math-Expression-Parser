@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_set>
+#include <unordered_map>
 
 static std::string const _LDEL = "(";
 static std::string const _RDEL = ")";
@@ -12,6 +13,19 @@ static std::string const _ADD = "add";
 static std::string const _SUBTRACT = "subtract";
 static std::string const _MULTIPLY = "multiply";
 static std::string const _DIVIDE = "divide";
+
+static char const _OP_ADD = '+';
+static char const _OP_SUBTRACT = '-';
+static char const _OP_MULTIPLY = '*';
+static char const _OP_DIVIDE = '/';
+
 static std::unordered_set<std::string> const _functions = {_ADD, _SUBTRACT, _MULTIPLY, _DIVIDE};
+static std::unordered_set<char> const _op_functions = {_OP_ADD, _OP_SUBTRACT, _OP_MULTIPLY, _OP_DIVIDE};
+static std::unordered_map<char, std::string> const _op_map_functions = {
+    {_OP_ADD, _ADD},
+    {_OP_SUBTRACT, _SUBTRACT},
+    {_OP_MULTIPLY, _MULTIPLY},
+    {_OP_DIVIDE, _DIVIDE}
+};
 
 #endif
