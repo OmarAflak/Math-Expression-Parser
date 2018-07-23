@@ -3,9 +3,6 @@
 
 #include "statement.h"
 
-#include <vector>
-#include <utility>
-
 class Processor {
     public:
         static double evaluate(std::string expression, const std::unordered_map<std::string, double>& map);

@@ -1,6 +1,5 @@
 #include "../include/processor.h"
 
-#include <iostream>
 double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map){
     int left = expression.find_last_of(_LDEL);
     int right = expression.find_first_of(_RDEL, left);
@@ -28,12 +27,6 @@ double Processor::evaluate(std::string expression, const std::unordered_map<std:
 
             Statement statement(lexpr, rexpr, opr);
             expression = expression.substr(0, left-opr.size())+toString(statement.evaluate(map))+expression.substr(right+1);
-
-            // std::cout << "lexpr = [" << lexpr << "]" << std::endl;
-            // std::cout << "rexpr = [" << rexpr << "]" << std::endl;
-            // std::cout << "opr = [" << opr << "]" << std::endl;
-            // std::cout << "new expr = [" << expression << "]" << std::endl;
-
             return evaluate(expression, map);
         }
         else{
