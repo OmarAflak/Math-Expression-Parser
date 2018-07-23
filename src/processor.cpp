@@ -45,11 +45,10 @@ double Processor::evaluateExpr(std::string expression, const std::unordered_map<
     return toNumber(expression);
 }
 
-
-#include <iostream>
 std::string Processor::preprocess(std::string expression, const std::unordered_map<std::string, double>& map){
-    for(int i=0 ; i<expression.size() ; i++){
-        if(_op_functions.find(expression[i])!=_op_functions.end()){
+    for(const char& op : _op_priorities){
+        int i,p=0;
+        while((i=expression.find(op, p))!=-1){
             int left, right;
 
             for(left=i-1 ; left>=0 ; left--){
@@ -66,16 +65,9 @@ std::string Processor::preprocess(std::string expression, const std::unordered_m
 
             std::string lexpr = expression.substr(left+1, i-left-1);
             std::string rexpr = expression.substr(i+1, right-i-1);
-
-            std::cout << "left = [" << lexpr << "]\t l=" << left << std::endl;
-            std::cout << "right = [" << rexpr << "]\t r=" << right << std::endl;
-            std::cout << "expr = " << expression << std::endl;
-
             std::string fun = _op_map_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL;
             expression = expression.substr(0, left+1) + fun + (right<expression.size()?expression.substr(right):"");
-
-            std::cout << "new expr = " << expression << std::endl;
-            return preprocess(expression, map);
+            p = i+1;
         }
     }
     return expression;
