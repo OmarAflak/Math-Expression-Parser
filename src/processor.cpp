@@ -1,12 +1,15 @@
 #include "../include/processor.h"
 
-double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map){
+#include <iostream>
+double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map, bool expr){
     removeAllSpaces(expression);
-    expression = preprocess(expression, map);
-    return evaluateRecursive(expression, map);
+    if(!expr){
+        expression = preprocess(expression, map);
+    }
+    return evaluateExpr(expression, map);
 }
 
-double Processor::evaluateRecursive(std::string expression, const std::unordered_map<std::string, double>& map){
+double Processor::evaluateExpr(std::string expression, const std::unordered_map<std::string, double>& map){
     int left = expression.find_last_of(_LDEL);
     int right = expression.find_first_of(_RDEL, left);
     int comma = expression.find(_SEP, left);
@@ -33,7 +36,7 @@ double Processor::evaluateRecursive(std::string expression, const std::unordered
 
             Statement statement(lexpr, rexpr, opr);
             expression = expression.substr(0, left-opr.size())+toString(statement.evaluate(map))+expression.substr(right+1);
-            return evaluateRecursive(expression, map);
+            return evaluateExpr(expression, map);
         }
         else{
             throw std::invalid_argument("Invalid expression, missing comma : "+expression);

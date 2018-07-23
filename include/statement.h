@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 #include <stdexcept>
+#include <cmath>
 
 class Statement {
     private:
