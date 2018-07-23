@@ -2,7 +2,6 @@
 #define PROCESSOR
 
 #include "statement.h"
-#include <iostream>
 
 class Processor {
     public:
