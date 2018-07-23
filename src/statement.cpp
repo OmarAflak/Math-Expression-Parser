@@ -34,6 +34,20 @@ double Statement::evaluate(const std::unordered_map<std::string, double>& map) c
         return a / b;
     if (opr == _POWER)
         return pow(a,b);
-    if (opr == _MODULO)
-        return (int)a % (int)b;
+}
+
+double Statement::differentiate(bool withRespectToLeft, const std::unordered_map<std::string, double>& map) const{
+    double a = process(left, map);
+    double b = process(right, map);
+
+    if (opr == _ADD)
+        return 1;
+    if (opr == _SUBTRACT)
+        return withRespectToLeft?1:-1;
+    if (opr == _MULTIPLY)
+        return withRespectToLeft?b:a;
+    if (opr == _DIVIDE)
+        return withRespectToLeft?1/b:-a/(b*b);
+    if (opr == _POWER)
+        return withRespectToLeft?b*pow(a,b-1):log(a)*exp(b*log(a));
 }

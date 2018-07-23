@@ -20,6 +20,7 @@ class Statement {
         Statement(std::string left, std::string right, std::string opr);
 
         double evaluate(const std::unordered_map<std::string, double>& map) const;
+        double differentiate(bool withRespectToLeft, const std::unordered_map<std::string, double>& map) const;
 };
 
 #endif
