@@ -25,8 +25,9 @@ static char const _OP_POWER = '^';
 static char const _OP_MODULO = '%';
 
 static std::unordered_set<std::string> const _functions = {_ADD, _SUBTRACT, _MULTIPLY, _DIVIDE, _POWER, _MODULO};
-static std::vector<char> _op_priorities = {_OP_MULTIPLY, _OP_POWER, _OP_MODULO, _OP_DIVIDE, _OP_ADD, _OP_SUBTRACT};
-static std::unordered_map<char, std::string> const _op_functions = {
+static std::unordered_set<char> const _op_functions = {_OP_ADD, _OP_SUBTRACT, _OP_MULTIPLY, _OP_DIVIDE, _OP_POWER, _OP_MODULO};
+static std::vector<char> _op_priorities = {_OP_MULTIPLY, _OP_POWER, _OP_DIVIDE, _OP_MODULO};
+static std::unordered_map<char, std::string> const _op_map_functions = {
     {_OP_ADD, _ADD},
     {_OP_SUBTRACT, _SUBTRACT},
     {_OP_MULTIPLY, _MULTIPLY},
