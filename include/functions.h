@@ -23,6 +23,13 @@ static char const _OP_POWER = '^';
 
 static std::unordered_set<std::string> const _functions = {_ADD, _SUBTRACT, _MULTIPLY, _DIVIDE, _POWER};
 static std::unordered_set<char> const _op_functions = {_OP_ADD, _OP_SUBTRACT, _OP_MULTIPLY, _OP_DIVIDE, _OP_POWER};
+static std::unordered_map<char, int> _op_priorities = {
+    {_OP_MULTIPLY, 0},
+    {_OP_POWER, 1},
+    {_OP_DIVIDE, 2},
+    {_OP_ADD, 3},
+    {_OP_SUBTRACT, 4},
+};
 static std::unordered_map<char, std::string> const _op_map_functions = {
     {_OP_ADD, _ADD},
     {_OP_SUBTRACT, _SUBTRACT},
