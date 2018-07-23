@@ -2,6 +2,7 @@
 #define STATEMENT
 
 #include "utils.h"
+#include "token.h"
 #include "functions.h"
 
 #include <unordered_map>
@@ -10,14 +11,12 @@
 
 class Statement {
     private:
-        std::string opr;
-        std::string left, right;
-
-        double process(std::string token, const std::unordered_map<std::string, double>& map) const;
+        char opr;
+        Token left, right;
 
     public:
         Statement();
-        Statement(std::string left, std::string right, std::string opr);
+        Statement(Token left, Token right, char opr);
 
         double evaluate(const std::unordered_map<std::string, double>& map) const;
         double differentiate(bool withRespectToLeft, const std::unordered_map<std::string, double>& map) const;
