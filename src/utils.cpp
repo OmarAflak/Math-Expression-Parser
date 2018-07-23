@@ -28,6 +28,6 @@ double toNumber(const std::string& str){
 
 std::string toString(double n){
     std::stringstream ss;
-    ss << n;
+    ss << std::fixed << n;
     return ss.str();
 }
