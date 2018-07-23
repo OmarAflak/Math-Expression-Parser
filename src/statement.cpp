@@ -4,13 +4,6 @@ Statement::Statement(){
     this->uid = getUid();
 }
 
-Statement::Statement(std::string left){
-    this->uid = getUid();
-    this->left = left;
-    this->right = "0";
-    this->opr = _ADD;
-}
-
 Statement::Statement(std::string left, std::string right, std::string opr){
     this->uid = getUid();
     this->left = left;
