@@ -1,40 +1,12 @@
 #include "../include/processor.h"
 
-#include <iostream>
-
-
-std::string Processor::preprocess(std::string expression, const std::unordered_map<std::string, double>& map){
-    removeAllSpaces(expression);
-    
-    for(int i=0 ; i<expression.size() ; i++){
-        if(_op_functions.find(expression[i])!=_op_functions.end()){
-            int op_index=i, li=i-1, ri=i+1;
-
-            while(li>0){
-                if(map.find(expression.substr(li, op_index-li))!=map.end()){
-                    break;
-                }
-                li--;
-            }
-
-            while(ri<expression.size()){
-                if(map.find(expression.substr(op_index+1, ri-op_index-1))!=map.end()){
-                    break;
-                }
-                ri++;
-            }
-
-            std::string lexpr = expression.substr(li, op_index-li);
-            std::string rexpr = expression.substr(op_index+1, ri-op_index-1);
-            expression = expression.substr(0, li)+_op_map_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL+expression.substr(ri+rexpr.size()-1);
-            return preprocess(expression, map);
-        }
-    }
-    return expression;
-}
-
 double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map){
     removeAllSpaces(expression);
+    expression = preprocess(expression, map);
+    return evaluateRecursive(expression, map);
+}
+
+double Processor::evaluateRecursive(std::string expression, const std::unordered_map<std::string, double>& map){
     int left = expression.find_last_of(_LDEL);
     int right = expression.find_first_of(_RDEL, left);
     int comma = expression.find(_SEP, left);
@@ -61,7 +33,7 @@ double Processor::evaluate(std::string expression, const std::unordered_map<std:
 
             Statement statement(lexpr, rexpr, opr);
             expression = expression.substr(0, left-opr.size())+toString(statement.evaluate(map))+expression.substr(right+1);
-            return evaluate(expression, map);
+            return evaluateRecursive(expression, map);
         }
         else{
             throw std::invalid_argument("Invalid expression, missing comma : "+expression);
@@ -69,4 +41,32 @@ double Processor::evaluate(std::string expression, const std::unordered_map<std:
     }
 
     return toNumber(expression);
+}
+
+std::string Processor::preprocess(std::string expression, const std::unordered_map<std::string, double>& map){
+    for(int i=0 ; i<expression.size() ; i++){
+        if(_op_functions.find(expression[i])!=_op_functions.end()){
+            int left, right;
+
+            for(left=i ; left>0 ; left--){
+                if(map.find(expression.substr(left, i-left))!=map.end()){
+                    break;
+                }
+            }
+
+            for(right=i ; right<expression.size() ; right++){
+                if(map.find(expression.substr(i+1, right-i))!=map.end()){
+                    break;
+                }
+            }
+
+            std::string lexpr = expression.substr(left, i-left);
+            std::string rexpr = expression.substr(i+1, right-i);
+            std::string fun = _op_map_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL;
+            expression = expression.substr(0, left) + fun + (right<expression.size()?expression.substr(right+1):"");
+
+            return preprocess(expression, map);
+        }
+    }
+    return expression;
 }
