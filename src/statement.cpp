@@ -34,4 +34,6 @@ double Statement::evaluate(const std::unordered_map<std::string, double>& map) c
         return a / b;
     if (opr == _POWER)
         return pow(a,b);
+    if (opr == _MODULO)
+        return (int)a % (int)b;
 }

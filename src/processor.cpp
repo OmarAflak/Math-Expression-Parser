@@ -65,7 +65,7 @@ std::string Processor::preprocess(std::string expression, const std::unordered_m
 
             std::string lexpr = expression.substr(left+1, i-left-1);
             std::string rexpr = expression.substr(i+1, right-i-1);
-            std::string fun = _op_map_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL;
+            std::string fun = _op_functions.at(expression[i])+_LDEL+lexpr+_SEP+rexpr+_RDEL;
             expression = expression.substr(0, left+1) + fun + (right<expression.size()?expression.substr(right):"");
             p = i+1;
         }
