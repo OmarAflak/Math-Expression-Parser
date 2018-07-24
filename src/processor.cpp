@@ -1,8 +1,9 @@
 #include "../include/processor.h"
 
-double Processor::evaluate(std::string expression, const std::unordered_map<std::string, double>& map){
-    removeAllSpaces(expression);
-    return evaluateExpr(expression, map);
+double Processor::evaluate(const std::string& expression, const std::unordered_map<std::string, double>& map){
+    std::string expCopy = expression;
+    removeAllSpaces(expCopy);
+    return evaluateExpr(expCopy, map);
 }
 
 double Processor::evaluateExpr(std::string expression, const std::unordered_map<std::string, double>& map){
