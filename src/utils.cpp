@@ -1,13 +1,7 @@
 #include "../include/utils.h"
 
 void removeAllSpaces(std::string& str){
-    std::string s;
-    for(const char& c : str){
-        if(c!=' '){
-            s+=c;
-        }
-    }
-    str = s;
+    str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 }
 
 bool isNumber(const std::string& str){
