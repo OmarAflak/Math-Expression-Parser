@@ -14,7 +14,7 @@ double Processor::evaluateExpr(std::string expression, const std::unordered_map<
         std::string expr = expression.substr(ldel+1, rdel-ldel-1);
         if(isKnown(expr, map)){
             for(const std::string& fun : _functions){
-                if(ldel>=fun.size() && ldel+fun.size()<expression.size()){
+                if(ldel>=fun.size()){
                     if(expression.substr(ldel-fun.size(), fun.size())==fun){
                         Token token(fun, expr);
                         expression = expression.substr(0, ldel-fun.size()) + toString(token.evaluate(map)) + expression.substr(rdel+1);

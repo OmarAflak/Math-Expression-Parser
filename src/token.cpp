@@ -32,6 +32,8 @@ double Token::process(const std::unordered_map<std::string, double>& map) const{
 double Token::evaluate(const std::unordered_map<std::string, double>& map) const{
     double value = process(map);
 
+    if (fun == "self")
+        return value;
     if (fun == _EXP)
         return exp(value);
     if (fun == _LOG)
@@ -40,4 +42,20 @@ double Token::evaluate(const std::unordered_map<std::string, double>& map) const
         return cos(value);
     if (fun == _SIN)
         return sin(value);
+}
+
+double Token::differentiate(const std::string& var, const std::unordered_map<std::string, double>& map) const{
+    double value = process(map);
+    double seed = (token==var?1:0);
+
+    if (fun == "self")
+        return seed;
+    if (fun == _EXP)
+        return exp(value)*seed;
+    if (fun == _LOG)
+        return seed/value;
+    if (fun == _COS)
+        return -sin(value)*seed;
+    if (fun == _SIN)
+        return cos(value)*seed;
 }

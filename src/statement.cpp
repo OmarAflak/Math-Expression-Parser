@@ -23,3 +23,21 @@ double Statement::evaluate(const std::unordered_map<std::string, double>& map) c
     if (opr == _POWER)
         return pow(a,b);
 }
+
+double Statement::differentiate(const std::string& var, const std::unordered_map<std::string, double>& map) const{
+    double l = left.evaluate(map);
+    double r = right.evaluate(map);
+    double lprime = left.differentiate(var, map);
+    double rprime = right.differentiate(var, map);
+
+    if (opr == _ADD)
+        return lprime + rprime;
+    if (opr == _SUBTRACT)
+        return lprime - rprime;
+    if (opr == _MULTIPLY)
+        return l*rprime + r*lprime;
+    if (opr == _DIVIDE)
+        return (lprime*r - l*rprime) / (r*r);
+    if (opr == _POWER)
+        return r*lprime*pow(l, r-1);
+}

@@ -19,7 +19,7 @@ class Statement {
         Statement(Token left, Token right, char opr);
 
         double evaluate(const std::unordered_map<std::string, double>& map) const;
-        double differentiate(bool withRespectToLeft, const std::unordered_map<std::string, double>& map) const;
+        double differentiate(const std::string& var, const std::unordered_map<std::string, double>& map) const;
 };
 
 #endif

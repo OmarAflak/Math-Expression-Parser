@@ -12,7 +12,7 @@ static char const _RDEL = ')';
 
 // functions
 static std::string const _EXP = "exp";
-static std::string const _LOG = "ln";
+static std::string const _LOG = "log";
 static std::string const _COS = "cos";
 static std::string const _SIN = "sin";
 

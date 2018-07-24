@@ -3,7 +3,7 @@
 #include "../include/processor.h"
 
 void test(){
-    std::string expression = "exp(x)*y";
+    std::string expression = "x^2 + exp(y)";
     std::cout << Processor::evaluate(expression, {{"x", 3}, {"y", 2}}) << std::endl;
 }
 

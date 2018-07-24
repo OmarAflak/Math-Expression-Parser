@@ -23,6 +23,7 @@ class Token {
 
         double process(const std::unordered_map<std::string, double>& map) const;
         double evaluate(const std::unordered_map<std::string, double>& map) const;
+        double differentiate(const std::string& var, const std::unordered_map<std::string, double>& map) const;
 };
 
 #endif
